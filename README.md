@@ -40,3 +40,7 @@ Each user is linked to their workout data through relational keys, ensuring data
 Purpose
 
 This project was built to explore full-stack development, authentication systems, and database design while focusing on creating a clean and intuitive user experience.
+
+Database Setup:
+![Database Schema](./pictures/dbImage.png)
+
