@@ -1,3 +1,9 @@
+const workouts = [
+  { id: 1, name: "Chest Day", exercises: 4 },
+  { id: 2, name: "Leg Day", exercises: 5 },
+  { id: 3, name: "Back Day", exercises: 3 },
+]
+
 export default function WorkoutsPage() {
   return (
     <div className="min-h-screen bg-gray-950 px-6 py-12">
@@ -11,32 +17,17 @@ export default function WorkoutsPage() {
         </div>
 
         <div className="flex flex-col gap-4">
-          
-          <div className="bg-gray-900 rounded-xl p-6 flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
-            <div>
-              <h2 className="text-white font-medium">Chest Day</h2>
-              <p className="text-gray-500 text-sm mt-1">4 exercises</p>
+          {workouts.map((workout) => (
+            <div key={workout.id} className="bg-gray-900 rounded-xl p-6 flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
+              <div>
+                <h2 className="text-white font-medium">{workout.name}</h2>
+                <p className="text-gray-500 text-sm mt-1">{workout.exercises} exercises</p>
+              </div>
+              <span className="text-gray-600 text-xl">→</span>
             </div>
-            <span className="text-gray-600 text-xl">→</span>
-          </div>
-
-          <div className="bg-gray-900 rounded-xl p-6 flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
-            <div>
-              <h2 className="text-white font-medium">Leg Day</h2>
-              <p className="text-gray-500 text-sm mt-1">5 exercises</p>
-            </div>
-            <span className="text-gray-600 text-xl">→</span>
-          </div>
-
-          <div className="bg-gray-900 rounded-xl p-6 flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
-            <div>
-              <h2 className="text-white font-medium">Back Day</h2>
-              <p className="text-gray-500 text-sm mt-1">3 exercises</p>
-            </div>
-            <span className="text-gray-600 text-xl">→</span>
-          </div>
-
+          ))}
         </div>
+
       </div>
     </div>
   )
