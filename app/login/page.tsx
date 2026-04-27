@@ -1,9 +1,6 @@
-'use client'
 import Link from "next/link"
-import { useState } from 'react'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
   return (
     <div className="min-h-screen bg-gray-950 flex items-center justify-center px-4">
       <div className="bg-gray-900 border border-gray-800 rounded-xl p-10 w-full max-w-sm">
@@ -13,7 +10,7 @@ export default function LoginPage() {
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <label className="text-gray-400 text-sm">Email</label>
-            <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="you@email.com" className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-blue-500"/>
+            <input type="email" placeholder="you@email.com" className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-blue-500"/>
           </div>
 
           <div className="flex flex-col gap-1.5">
