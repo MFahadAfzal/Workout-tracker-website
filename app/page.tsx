@@ -1,12 +1,17 @@
 'use client'
 import Link from "next/link"
 import { useState } from 'react'
+import { login } from '@/utils/supabase/db'
+import { useRouter } from "next/router"
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const router = useRouter()
 
-  const handleLogin = () => {
-  // your logic here
+  const handleLogin = async () => {
+    const success = await login(email, password)
+    if (success) router.push('/workout')
   }
 
   const handleSignup = () => {
@@ -27,7 +32,7 @@ export default function LoginPage() {
 
           <div className="flex flex-col gap-1.5">
             <label className="text-gray-400 text-sm">Password</label>
-            <input type="password" placeholder="••••••••" className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-blue-500"/>
+            <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-blue-500"/>
           </div>
 
           <button className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3 text-sm font-medium mt-2">
