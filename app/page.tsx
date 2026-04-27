@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { useState } from 'react'
 import { login } from '@/utils/supabase/db'
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
