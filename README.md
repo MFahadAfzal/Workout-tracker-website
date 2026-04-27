@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Workout Tracker Web Application
 
-## Getting Started
+A full-stack fitness tracking web application that allows users to create accounts, log in securely, and track workout-related data. Built with a focus on user experience, authentication, and scalable database design.
 
-First, run the development server:
+Live Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+You can view the application here:
+https://workout-tracker-website.vercel.app/
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Demo Login Credentials:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Email: guest@guest.com
+Password: guest
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Note: This account is for demo purposes only.
 
-## Learn More
+Tech Stack
+Next.js
+React
+Supabase
+JavaScript
+HTML / CSS
+REST APIs
+Features
+Secure user authentication (login / signup)
+User-specific data storage and retrieval
+Workout tracking system
+Responsive and user-friendly interface
+Real-time database integration via Supabase
+Database Structure (High-Level)
 
-To learn more about Next.js, take a look at the following resources:
+The application uses a relational database structure in Supabase:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Users Table – stores user authentication and profile information
+Workouts Table – stores workout sessions linked to users
+Exercises Table – stores individual exercises within workouts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Each user is linked to their workout data through relational keys, ensuring data separation and scalability.
 
-## Deploy on Vercel
+Purpose
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project was built to explore full-stack development, authentication systems, and database design while focusing on creating a clean and intuitive user experience.
