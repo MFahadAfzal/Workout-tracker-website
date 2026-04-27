@@ -1,5 +1,4 @@
 'use client'
-import { getWorkouts } from '@/utils/supabase/db'
 
 const workouts = [
   { id: 1, name: "Chest Day", exercises: 4 },
