@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link"
 import { useState } from 'react'
-import { login } from '@/utils/supabase/dbclient'
+import { login } from '@/utils/db/db.client'
 import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
