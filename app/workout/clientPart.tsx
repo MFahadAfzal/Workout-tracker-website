@@ -22,8 +22,8 @@ export default function ClientPart({ data }: { data: any[] | null }) {
           workouts.map((workout: any) => (
             <div key={workout.id} className="bg-gray-900 rounded-xl p-6 flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
               <div>
-                <h2 className="text-white font-medium">{workout.name}</h2>
-                <p className="text-gray-500 text-sm mt-1">{workout.exercises} exercises</p>
+                <h2 className="text-white font-medium">{workout.excercises}</h2>
+                <p className="text-gray-500 text-sm mt-1">{workout.exercise} exercises</p>
               </div>
               <span className="text-gray-600 text-xl">→</span>
             </div>
