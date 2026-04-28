@@ -15,6 +15,7 @@ export default function ClientPart({ data }: { data: any[] | null }) {
         </div>
 
         <div className="flex flex-col gap-4">
+            //checks if no data and if there is data will make cards  
           {data!.length === 0 ? (
             <p className="text-gray-500 text-center mt-12">No workouts yet. Add your first one!</p>
           ) : (
