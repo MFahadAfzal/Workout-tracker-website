@@ -13,3 +13,13 @@ export async function getExercises(id: string){
     const { data } = await supabase.from('exercises').select().eq('workout_id', id)
     return data
 }
+
+export async function getSets(id: string){
+    const supabase = await createClient()
+
+    const { data: setData } = await supabase.from('sets').select().eq('exercise_id', id)
+
+    const { data: logData } = await supabase.from('logs').select().eq('exercise_id', id)
+
+    return {setData, logData}
+}
