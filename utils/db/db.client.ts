@@ -55,10 +55,19 @@ export async function addExercise(exerciseName: string, id: string){
     const supabase = createClient()
 
     const { data, error } = await supabase.from('exercises').insert({ name: exerciseName, workout_id: id}).select()
+
+    
     console.log(error)
     return data ? data[0] : null
     
   }
+
+export async function deleteExercise(exerciseId: string){
+    const supabase = createClient()
+
+    const { data, error } = await supabase.from('exercises').delete().eq('id', exerciseId)
+    return error
+}
 
 
 export async function addSet(exerciseId: string, reps: Number, weight: Number){
@@ -67,6 +76,7 @@ export async function addSet(exerciseId: string, reps: Number, weight: Number){
     const {count} = await supabase.from('sets').select('*', { count: 'exact', head: true }).eq('exercise_id', exerciseId)
 
     const { data, error } = await supabase.from('sets').insert({ set_number: count! +1, weight: weight, reps: reps, exercise_id: exerciseId}).select()
+    await supabase.from('logs').insert({ set_number: count! +1, weight: weight, reps: reps, exercise_id: exerciseId})
 
     return data ? data[0] : null
     

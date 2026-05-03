@@ -99,16 +99,19 @@ export default function ClientPart({ data }: { data: any[] | null }) {
             <p className="text-gray-500 text-center mt-12">No workouts yet. Add your first one!</p>
           ) : (
           workouts!.map((workout: any) => (
-            <Link key={workout.id} href={`/workout/${workout.id}`}>
-            <div key={workout.id} className="bg-gray-900 rounded-xl p-6 flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
-              <button onClick={(e) => (e.stopPropagation(), setSelectedWorkoutId(workout.id), setDeleteWorkoutPopup(true))} className="text-gray-600 text-xl">X</button>
+            
+            <div key={workout.id} className="bg-gray-900 rounded-xl p-6 flex cursor-pointer hover:bg-gray-800 transition">
+              <button onClick={(e) => (e.stopPropagation(), setSelectedWorkoutId(workout.id), setDeleteWorkoutPopup(true))} className="text-gray-600 text-xl w-[10%]">X</button>
+
+              <Link key={workout.id} href={`/workout/${workout.id}`} className='w-[90%] flex justify-between '>
               <div>
                 <h2 className="text-white font-medium">{workout.exercise}</h2>
                 <p className="text-gray-500 text-sm mt-1">{workout.exercise} exercises</p>
               </div>
               <span className="text-gray-600 text-xl">→</span>
+              </Link>
             </div>
-            </Link>
+            
           )))}
         </div>
 

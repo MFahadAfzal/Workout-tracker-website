@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { addSet, getExerciseInfo, addExercise} from "@/utils/db/db.client"
+import { addSet, getExerciseInfo, addExercise, deleteExercise} from "@/utils/db/db.client"
+import { useRouter } from 'next/navigation'
 
 export default function ClientPart({ id, data }: { id: string; data: any[] | null }) {
     const [exercises, setExercises] = useState(data ?? [])
@@ -11,7 +12,8 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
     const [userWeight, setUserWeight] = useState(0)
     const [showAddExercisePopup, setAddExercisePopup] = useState(false)
     const [exerciseName, setExerciseName] = useState("")
-
+    const [showDeleteExercisePopup, setDeleteExercisePopup] = useState(false)
+    const router = useRouter()
 
     const addingExercise = async() => {
         console.log(id)
@@ -22,8 +24,12 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
                 }
     }
 
+    const deletingExercise = async() => {
+
+    }
+
     const getSets = async(exerciseId: string) => {
-        console.log("saodjkfohjfojasodfj")
+ 
         const userSets = await getExerciseInfo(exerciseId)
         if (userSets) {
             setSets(userSets)
@@ -36,6 +42,7 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
         const newSet = await addSet(workoutId, repitions, weight)
         setSets([...sets, newSet])
     }
+    
 //onChange={(e) => setWorkoutName(e.target.value)}
 
 
@@ -84,7 +91,7 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
                     <div key={exercise.id} className="bg-gray-900 rounded-xl overflow-hidden">
 
                         <div onClick={(e) => {e.stopPropagation(); getSets(exercise.id); setOpenId(openId === exercise.id ? null : exercise.id); setSelectedExerciseId(exercise.id)}} className="p-6 flex justify-between items-center cursor-pointer hover:bg-gray-800 transition">
-                            <button className="text-gray-600 text-xl">X</button>
+                            <button onClick={() => setDeleteExercisePopup(true)} className="text-gray-600 text-xl">X</button>
                             <div>
                                 <h2 className="text-white font-medium">{exercise.name}</h2>
                                 <p className="text-gray-500 text-sm mt-1">{exercise.name} exercises</p>
@@ -101,7 +108,7 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
                                     <p className="text-gray-500 text-center mt-12">No sets yet. Add your first one! </p>
                                 ): (
                                     sets.map((set: any) => (
-                                        <p key={set.id} className="text-gray-500 text-sm mt-1">set: {set.set_number} reps: {set.reps} weight: {set.weight}lb </p>
+                                        <p key={set.id} className="text-gray-500 text-base mt-1">set: {set.set_number} reps: {set.reps} weight: {set.weight}lb </p>
                                     ))
                                 )}
                                 <div className="flex gap-4 mt-4">
@@ -114,14 +121,47 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
                                         <input onChange={(e) => setUserWeight(Number(e.target.value))} type="number" defaultValue={exercise.weight} className="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm w-24 focus:outline-none focus:border-blue-500"/>
                                     </div>
                                 </div>
+                                
+
+                                <div className="flex gap-10">
                                 <button onClick={() => saveNewSet(exercise.id, userReps, userWeight)} className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg self-start mt-1">
                                     Save
                                 </button>
+                                <button onClick={() => (router.push('/workout/${id}/${exercise.id}'))} className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg self-start mt-1">
+                                    Details
+                                </button>
+                                </div>
                             </div>
                         )}
 
                     </div>
                 )))}
+
+
+                {/* This is for the popup if the user presses the x beside the exercise */} 
+        {showDeleteExercisePopup && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-20">
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-10 w-full max-w-sm">
+                  <h1 className="text-white text-2xl font-medium mb-1">Delete Exercise</h1>
+
+                  <div className="flex flex-col gap-4">
+                  
+                    <label className="text-gray-400 text-sm">Are you sure you would like to delete this Exercise?</label>
+                  
+
+                  <div className="flex gap-4 flex justify-between">
+                      <button onClick={() => (deleteExercise(selectedExerciseId), setDeleteExercisePopup(false), setExercises(exercises!.filter(w => w.id !== selectedExerciseId)))} className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3 text-sm font-medium mt-2 px-6 py-3">
+                          Delete
+                      </button>
+                      <button onClick={() => (setSelectedExerciseId(""),setDeleteExercisePopup(false))} className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3 text-sm font-medium mt-2 px-6 py-3">
+                          Close
+                      </button>
+                  </div>
+
+                  </div>
+              </div>
+          </div>
+        )}
                 </div>
 
             </div>
