@@ -41,8 +41,8 @@ export default function ClientPart({ id, setData, logData }: { id: string; setDa
                     
                     <div className="bg-gray-900 rounded-xl overflow-hidden h-[90%] pl-5">
                         <div className="flex">
-                            <div className='flex-1'><Charts data={logData} length={30} set={selectedSet} yAxis='reps'/></div>
-                            <div className='flex-1'><Charts data={logData} length={30} set={selectedSet} yAxis='weight'/></div>
+                            <div className='flex-1'><Charts data={logData} length={100} set={selectedSet} yAxis='reps'/></div>
+                            <div className='flex-1'><Charts data={logData} length={100} set={selectedSet} yAxis='weight'/></div>
                         </div>
                     </div>
                 </>

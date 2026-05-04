@@ -45,7 +45,7 @@ export default function Charts({data, length, set, yAxis }: {data: any[] | null,
   
     
 
-    //getting date for 30 days ago so I can set the chart to display only 30 days of data
+    //getting date for x days ago so I can set the chart to display only x days of data
 
     const filterDate = new Date()
     filterDate.setDate(filterDate.getDate() - length)
