@@ -12,7 +12,6 @@ export default function Navbar() {
       <h1 className="text-white font-bold text-xl">Workout Tracker</h1>
       <div className="flex gap-8">
         <Link href="/workout" className="text-gray-300 hover:text-white">Workouts</Link>
-        <Link href="/history" className="text-gray-300 hover:text-white">History</Link>
       </div>
     </nav>
   )
