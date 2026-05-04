@@ -89,7 +89,7 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
                                     {sets.length === 0 ?(
                                         <p className="text-gray-500 text-center mt-12">No sets yet. Add your first one! </p>
                                     ): (
-                                        sets.map((set: any) => (
+                                        sets.sort((a, b) => a.set_number - b.set_number).map((set: any) => (
                                             <div key={set.id} className='flex gap-10'>
                                                 <p  className="text-gray-500 text-base mt-1">set: {set.set_number} reps: {set.reps} weight: {set.weight}lb </p>
                                                 <button onClick={() => (setUpdateSetPopup(true), setSelectedSetId(set.id))} className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-2 rounded-lg">Update</button>
