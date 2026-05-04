@@ -2,6 +2,8 @@
 import { useState } from 'react'
 import { addSet, getExerciseInfo, addExercise, deleteExercise} from "@/utils/db/db.client"
 import { useRouter } from 'next/navigation'
+import DeleteExercisePopup from './DeleteExercisePopup'
+import AddExercisePopup from './AddExercisePopup'
 
 export default function ClientPart({ id, data }: { id: string; data: any[] | null }) {
     const [exercises, setExercises] = useState(data ?? [])
@@ -24,9 +26,6 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
                 }
     }
 
-    const deletingExercise = async() => {
-
-    }
 
     const getSets = async(exerciseId: string) => {
  
@@ -56,32 +55,6 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
                         + Add exercise
                     </button>
                 </div>
-
-                {/* This is for the popup if the user presses add exercise */} 
-                {showAddExercisePopup && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-20">
-                    <div className="bg-gray-900 border border-gray-800 rounded-xl p-10 w-full max-w-sm">
-                        <h1 className="text-white text-2xl font-medium mb-1">Add Workout</h1>
-
-                        <div className="flex flex-col gap-4">
-                        <div className="flex flex-col gap-1.5">
-                            <label className="text-gray-400 text-sm">Workout</label>
-                            <input onChange={(e) => setExerciseName(e.target.value)} type="text" placeholder="Your Workout" className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-blue-500"/>
-                        </div>
-
-                        <div className="flex gap-4 flex justify-between">
-                            <button onClick={() => addingExercise()} className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3 text-sm font-medium mt-2 px-6 py-3">
-                                Add
-                            </button>
-                            <button onClick={() => setAddExercisePopup(false)} className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3 text-sm font-medium mt-2 px-6 py-3">
-                                close
-                            </button>
-                        </div>
-
-                        </div>
-                    </div>
-                </div>
-                )}
 
                 <div className="flex flex-col gap-4">
                     {exercises!.length === 0 ? (
@@ -127,7 +100,7 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
                                     <button onClick={() => saveNewSet(exercise.id, userReps, userWeight)} className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg self-start mt-1">
                                         Save
                                     </button>
-                                    <button onClick={() => (router.push('/workout/${id}/${exercise.id}'))} className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg self-start mt-1">
+                                    <button onClick={() => (router.push(`/workout/${id}/${exercise.id}`))} className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg self-start mt-1">
                                         Details
                                     </button>
                                     </div>
@@ -137,29 +110,21 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
                         </div>
                     )))}
 
+                    {/* This is for the popup if the user presses add exercise */} 
+                    {showAddExercisePopup && (
+                        <AddExercisePopup
+                            onAdd={() => addingExercise()}
+                            onClose={() => setAddExercisePopup(false)}
+                            onChange={(name) => setExerciseName(name)}
+                        />
+                    )}
 
                     {/* This is for the popup if the user presses the x beside the exercise */} 
                     {showDeleteExercisePopup && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-20">
-                        <div className="bg-gray-900 border border-gray-800 rounded-xl p-10 w-full max-w-sm">
-                            <h1 className="text-white text-2xl font-medium mb-1">Delete Exercise</h1>
-
-                            <div className="flex flex-col gap-4">
-                            
-                                <label className="text-gray-400 text-sm">Are you sure you would like to delete this Exercise?</label>
-                            
-                                <div className="flex gap-4 flex justify-between">
-                                    <button onClick={() => (deleteExercise(selectedExerciseId), setDeleteExercisePopup(false), setExercises(exercises!.filter(w => w.id !== selectedExerciseId)))} className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3 text-sm font-medium mt-2 px-6 py-3">
-                                        Delete
-                                    </button>
-                                    <button onClick={() => (setSelectedExerciseId(""),setDeleteExercisePopup(false))} className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3 text-sm font-medium mt-2 px-6 py-3">
-                                        Close
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+                        <DeleteExercisePopup
+                            onDelete={() => (deleteExercise(selectedExerciseId), setDeleteExercisePopup(false), setExercises(exercises!.filter(w => w.id !== selectedExerciseId)))}
+                            onClose={() => (setSelectedExerciseId(""), setDeleteExercisePopup(false))}
+                        />
                     )}
                 </div>
 

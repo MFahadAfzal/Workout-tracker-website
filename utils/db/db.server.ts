@@ -16,7 +16,7 @@ export async function getExercises(id: string){
 
 export async function getSets(id: string){
     const supabase = await createClient()
-
+    console.log(id)
     const { data: setData } = await supabase.from('sets').select().eq('exercise_id', id)
 
     const { data: logData } = await supabase.from('logs').select().eq('exercise_id', id)
