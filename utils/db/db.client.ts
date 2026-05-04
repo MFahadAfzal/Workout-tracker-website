@@ -83,6 +83,21 @@ export async function addSet(exerciseId: string, reps: Number, weight: Number){
     
   }
 
+  export async function updateSet(exerciseId: string, id: string, reps: Number, weight: Number){
+    const supabase = createClient()
+
+    const {count} = await supabase.from('sets').select('*', { count: 'exact', head: true }).eq('exercise_id', exerciseId)
+
+    const{ data, error} = await supabase.from('sets').update({reps:reps, weight: weight}).eq('id', id)
+    await supabase.from('logs').insert({ set_number: count!, weight: weight, reps: reps, exercise_id: exerciseId})
+
+    console.log(error)
+
+    return data ? data[0] : null
+    
+  }
+
+
   export async function getExerciseInfo(exerciseId: string){
       const supabase = createClient()
       const {data:{user}} = await supabase.auth.getUser()

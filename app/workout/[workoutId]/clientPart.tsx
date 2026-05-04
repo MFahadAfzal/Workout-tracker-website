@@ -1,20 +1,31 @@
 'use client'
 import { useState } from 'react'
-import { addSet, getExerciseInfo, addExercise, deleteExercise} from "@/utils/db/db.client"
+import { addSet, updateSet, getExerciseInfo, addExercise, deleteExercise} from "@/utils/db/db.client"
 import { useRouter } from 'next/navigation'
 import DeleteExercisePopup from './DeleteExercisePopup'
 import AddExercisePopup from './AddExercisePopup'
+import UpdateSetPopup from './UpdateSetPopup'
+
+
 
 export default function ClientPart({ id, data }: { id: string; data: any[] | null }) {
     const [exercises, setExercises] = useState(data ?? [])
     const [sets, setSets] = useState<any[]>([])
+
+
     const [openId, setOpenId] = useState<string | null>(null)
     const [selectedExerciseId, setSelectedExerciseId] = useState("")
+    const [selectedSetId, setSelectedSetId] = useState("")
+
     const [userReps, setUserReps] = useState(0)
     const [userWeight, setUserWeight] = useState(0)
-    const [showAddExercisePopup, setAddExercisePopup] = useState(false)
     const [exerciseName, setExerciseName] = useState("")
+
+    const [showAddExercisePopup, setAddExercisePopup] = useState(false)
     const [showDeleteExercisePopup, setDeleteExercisePopup] = useState(false)
+    const [showUpdateSetPopup, setUpdateSetPopup] = useState(false)
+
+
     const router = useRouter()
 
     const addingExercise = async() => {
@@ -28,20 +39,18 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
 
 
     const getSets = async(exerciseId: string) => {
- 
         const userSets = await getExerciseInfo(exerciseId)
         if (userSets) {
             setSets(userSets)
             
         }
-        
     }
 
     const saveNewSet = async(workoutId: string, repitions: number, weight: number) => {
         const newSet = await addSet(workoutId, repitions, weight)
         setSets([...sets, newSet])
     }
-    
+
 
 
 
@@ -81,7 +90,10 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
                                         <p className="text-gray-500 text-center mt-12">No sets yet. Add your first one! </p>
                                     ): (
                                         sets.map((set: any) => (
-                                            <p key={set.id} className="text-gray-500 text-base mt-1">set: {set.set_number} reps: {set.reps} weight: {set.weight}lb </p>
+                                            <div key={set.id} className='flex gap-10'>
+                                                <p  className="text-gray-500 text-base mt-1">set: {set.set_number} reps: {set.reps} weight: {set.weight}lb </p>
+                                                <button onClick={() => (setUpdateSetPopup(true), setSelectedSetId(set.id))} className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-2 rounded-lg">Update</button>
+                                            </div>
                                         ))
                                     )}
                                     <div className="flex gap-4 mt-4">
@@ -126,6 +138,14 @@ export default function ClientPart({ id, data }: { id: string; data: any[] | nul
                             onClose={() => (setSelectedExerciseId(""), setDeleteExercisePopup(false))}
                         />
                     )}
+
+                    {showUpdateSetPopup && (
+                        <UpdateSetPopup
+                            onSave={(reps, weight) => (updateSet(selectedExerciseId, selectedSetId, reps, weight), setSets(sets.map(s => s.id === selectedSetId ? {...s, reps, weight} : s)), setUpdateSetPopup(false))}
+                            onClose={() => setUpdateSetPopup(false)}
+                        />
+                    )}
+
                 </div>
 
 
