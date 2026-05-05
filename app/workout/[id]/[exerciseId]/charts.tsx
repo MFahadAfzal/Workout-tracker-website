@@ -66,7 +66,7 @@ export default function Charts({data, length, set, yAxis }: {data: any[] | null,
       <CartesianGrid stroke="#aaa" strokeDasharray="5 5" />
       <Line type="monotone" dataKey={yAxis} stroke="purple" strokeWidth={2} name={yAxis}/>
       <XAxis dataKey="date" />
-      <YAxis width="auto" label={{ value: yAxis, position: 'insideLeft', angle: -90 }} />
+      <YAxis domain={['auto', 'auto']} width="auto" label={{ value: yAxis, position: 'insideLeft', angle: -90 }} />
       <Legend align="right" />
       <Tooltip />
   
